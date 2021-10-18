@@ -51,6 +51,7 @@ func main(){
 	fmt.Print("      ░   ░         ░      ░  ░    ░      ░  ░         ░         ░  ░ ░      ░  ░\n")
 	fmt.Print("                    ░                                                                 \n")
 
+	fmt.Print("V1.1\n")
 	if Domain==""{
 		fmt.Print("Error:domain Empty!")
 		os.Exit(0)

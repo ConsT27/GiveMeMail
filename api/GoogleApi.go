@@ -36,8 +36,8 @@ func (api GoogleApi) Run() []string{
 		DeepParseMap:=DeepSearchApi(ParseMap)
 
 		MailResultTemp:=deal.MatchMail(DeepParseMap)
-		for url,mail := range(MailResultTemp){
-			MailResult[url]=mail
+		for _,mail := range(MailResultTemp){
+			MailResult=append(MailResult,mail)
 		}
 		fmt.Printf("DeepSearchApi find [%d] emails|",len(MailResultTemp))
 	}
@@ -76,7 +76,7 @@ func reqAndParseGoogleApi(page int) (map[string]string,bool){
 
 	//make http request,and return the response  发起请求并返回结果
 	req,_:=http.NewRequest("GET",Url.String(),nil)
-	req.Header.Add("User-agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36")
+	req.Header.Add("User-agent","Mozilla/5.1 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36")
 
 	//request repeatedly
 	resp:=deal.RequestMore(req,client,5)
@@ -128,13 +128,13 @@ func reqAndParseGoogleApi(page int) (map[string]string,bool){
 
 			//Get information about the content block. The reason why there is if-else is because Google returns the content block of search results in two formats
 			//获取内容块的信息.为什么会有一个if-else，这是因为google的内容块有两种格式
-			ContentInfoArray := htmlquery.FindOne(n, "//div[@class='IsZvec']/span[@class='aCOpRe']/span[2]")
+			ContentInfoArray := htmlquery.FindOne(n, "//div[@class='IsZvec']/div[@class='VwiC3b yXK7lf MUxGbd yDYNvb lyLwlc lEBKkf']/span[2]")
 			ContentInfo := ""
 			if ContentInfoArray == nil {
-				ContentInfoTemp := htmlquery.Find(n, "//div[@class='IsZvec']/span[@class='aCOpRe']/span")
+				ContentInfoTemp := htmlquery.Find(n, "//div[@class='IsZvec']/div[@class='VwiC3b yXK7lf MUxGbd yDYNvb lyLwlc lEBKkf']/span")
 				ContentInfo = htmlquery.InnerText(ContentInfoTemp[0])
 			} else {
-				ContentInfoTemp := htmlquery.Find(n, "//div[@class='IsZvec']/span[@class='aCOpRe']/span[2]")
+				ContentInfoTemp := htmlquery.Find(n, "//div[@class='IsZvec']/div[@class='VwiC3b yXK7lf MUxGbd yDYNvb lyLwlc lEBKkf']/span[2]")
 				ContentInfo = htmlquery.InnerText(ContentInfoTemp[0])
 			}
 			//Load the result into the map 将结果装载进map
